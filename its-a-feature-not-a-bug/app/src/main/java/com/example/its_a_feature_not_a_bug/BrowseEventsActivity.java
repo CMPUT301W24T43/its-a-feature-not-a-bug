@@ -74,6 +74,29 @@ public class BrowseEventsActivity extends AppCompatActivity implements AddEventD
         // Include attendee limit if available
         if (event.getAttendeeLimit() > 0) {
             data.put("AttendeeLimit", event.getAttendeeLimit());
+        } else {
+            data.put("AttendeeLimit", null); // Set to null if attendee limit is not provided
+        }
+
+        // Include signed attendees if available
+        if (event.getSignedAttendees() != null) {
+            data.put("SignedAttendees", event.getSignedAttendees());
+        } else {
+            data.put("SignedAttendees", null); // Set to null if signed attendees list is not provided
+        }
+
+        // Include checked attendees if available
+        if (event.getCheckedAttendees() != null) {
+            data.put("CheckedAttendees", event.getCheckedAttendees());
+        } else {
+            data.put("CheckedAttendees", null); // Set to null if checked attendees list is not provided
+        }
+
+        // Include announcements if available
+        if (event.getAnnouncements() != null) {
+            data.put("Announcements", event.getAnnouncements());
+        } else {
+            data.put("Announcements", null); // Set to null if announcements list is not provided
         }
 
         eventsRef.document(event.getTitle())
@@ -85,6 +108,7 @@ public class BrowseEventsActivity extends AppCompatActivity implements AddEventD
                     }
                 });
     }
+
 
 
 
@@ -150,32 +174,33 @@ public class BrowseEventsActivity extends AppCompatActivity implements AddEventD
                 if (querySnapshots != null) {
                     eventDataList.clear();
                     for (QueryDocumentSnapshot doc: querySnapshots) {
-                        String eventId = doc.getId();
-                        String host = doc.getString("Host");
-                        Date date = doc.getDate("Date");
-                        String description = doc.getString("Description");
-                        int attendeeLimit = doc.contains("AttendeeLimit") ? doc.getLong("AttendeeLimit").intValue() : 0;
-                        int attendeeCount = doc.contains("AttendeeCount") ? doc.getLong("AttendeeCount").intValue() : 0;
-
-
-                        if (doc.get("signedAttendees") != null) {
-                            attendees = (ArrayList<String>) doc.get("signedAttendees");
-                        }
-
-
-
-                        String imageURLString = doc.getString("Poster");
-
-                        Log.d("Firestore", String.format("Event(%s, %s) fetched", eventId, host));
-
-                        Event event;
-                        if (attendeeLimit > 0) {
-                            event = new Event(imageURLString, eventId, host, date, description, attendeeLimit);
-                        } else {
-                            event = new Event(imageURLString, eventId, host, date, description);
-                        }
-                        event.setAttendeeCount(attendeeCount);
-                        event.setSignedAttendees(signedAttendees);
+                        Event event = doc.toObject(Event.class);
+//                        String eventId = doc.getId();
+//                        String host = doc.getString("Host");
+//                        Date date = doc.getDate("Date");
+//                        String description = doc.getString("Description");
+//                        int attendeeLimit = doc.contains("AttendeeLimit") ? doc.getLong("AttendeeLimit").intValue() : 0;
+//                        int attendeeCount = doc.contains("AttendeeCount") ? doc.getLong("AttendeeCount").intValue() : 0;
+//
+//
+//                        if (doc.get("signedAttendees") != null) {
+//                            attendees = (ArrayList<String>) doc.get("signedAttendees");
+//                        }
+//
+//
+//
+//                        String imageURLString = doc.getString("Poster");
+//
+//                        Log.d("Firestore", String.format("Event(%s, %s) fetched", eventId, host));
+//
+//                        Event event;
+//                        if (attendeeLimit > 0) {
+//                            event = new Event(imageURLString, eventId, host, date, description, attendeeLimit);
+//                        } else {
+//                            event = new Event(imageURLString, eventId, host, date, description);
+//                        }
+//                        event.setAttendeeCount(attendeeCount);
+//                        event.setSignedAttendees(signedAttendees);
                         eventDataList.add(event);
                     }
 

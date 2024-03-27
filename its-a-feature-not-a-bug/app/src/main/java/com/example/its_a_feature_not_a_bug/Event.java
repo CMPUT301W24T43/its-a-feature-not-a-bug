@@ -22,6 +22,19 @@ public class Event implements Serializable {
     private int attendeeLimit;
     private int attendeeCount;
 
+    public Event(String imageId, String title, String host, Date date, ArrayList<User> signedAttendees, ArrayList<User> checkedAttendees, ArrayList<Announcement> announcements, String description, int attendeeLimit, int attendeeCount) {
+        this.imageId = imageId;
+        this.title = title;
+        this.host = host;
+        this.date = date;
+        this.signedAttendees = signedAttendees;
+        this.checkedAttendees = checkedAttendees;
+        this.announcements = announcements;
+        this.description = description;
+        this.attendeeLimit = attendeeLimit;
+        this.attendeeCount = attendeeCount;
+    }
+
     /**
      * This is a constructor for the Event class.
      * @param imageId the image (event poster)

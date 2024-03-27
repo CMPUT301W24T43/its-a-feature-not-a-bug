@@ -3,6 +3,10 @@
 
 package com.example.its_a_feature_not_a_bug;
 
+import android.provider.Settings;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,15 +25,18 @@ public class User implements Serializable {
 
     private Map<String, Integer> NumTimesCheckedIn;
 
+    private String myId;
+
     /**
      * This is a constructor for the class
      * @param name the name of the user
      */
-    public User(String name) {
+    public User(String name, String myId) {
         this.name = name;
         this.signedEvents = new ArrayList<>();
         this.checkedEvents = new ArrayList<>();
         NumTimesCheckedIn = new HashMap<String, Integer>();
+        this.myId = myId;
     }
 
     /**

@@ -32,4 +32,10 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_menu_edit" />
 
+    <Switch
+        android:id="@+id/switch_my_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Events"/>
+
 </LinearLayout>
